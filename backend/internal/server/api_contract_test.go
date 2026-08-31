@@ -1042,7 +1042,7 @@ func TestAPIContracts(t *testing.T) {
 						{"key": "team", "label": "Team", "enabled": true, "aliases": ["team", "team*", "chatgptteam"], "requires_proxy_login": false, "sort_order": 40},
 						{"key": "k12", "label": "K12", "enabled": true, "aliases": ["k12", "chatgptk12"], "requires_proxy_login": false, "sort_order": 50}
 					],
-					"site_name": "Sub2API",
+					"site_name": "superTT",
 					"claude_oauth_system_prompt": "",
 					"claude_oauth_system_prompt_blocks": "",
 					"site_logo": "",
