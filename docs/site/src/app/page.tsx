@@ -172,7 +172,7 @@ export default function HomePage() {
         { text: '钱包与商城', url: '/docs/wallet', active: 'nested-url' },
         { text: '福利与邀请', url: '/docs/rewards', active: 'nested-url' },
         { text: 'API 参考', url: '/docs/api', active: 'nested-url' },
-        { text: '控制台', url: 'https://ai-pixel.online', external: true },
+        { text: '控制台', url: 'https://fuguofujia.icu', external: true },
       ]}
     >
       <main className="flex flex-1 flex-col bg-fd-background text-fd-foreground">
@@ -210,7 +210,7 @@ export default function HomePage() {
                 </div>
                 <pre className="home-terminal-body">
                   <code>
-                    <span className="tk-prompt">$</span> <span className="tk-cmd">curl</span> <span className="tk-str">https://ai-pixel.online/v1/chat/completions</span> {'\\'}
+                    <span className="tk-prompt">$</span> <span className="tk-cmd">curl</span> <span className="tk-str">https://fuguofujia.icu/v1/chat/completions</span> {'\\'}
                     {'\n'}    <span className="tk-flag">-H</span> <span className="tk-str">&quot;Authorization: Bearer sk-你的密钥&quot;</span> {'\\'}
                     {'\n'}    <span className="tk-flag">-d</span> <span className="tk-dim">{'\'{ "model": "gpt-5.5", "messages": [...] }\''}</span>
                     {'\n'}

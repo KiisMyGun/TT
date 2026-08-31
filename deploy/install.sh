@@ -2,7 +2,7 @@
 #
 # PixelAPI Installation Script
 # PixelAPI 安装脚本
-# Usage: curl -sSL https://raw.githubusercontent.com/PIXEL-API/PixelAPI/main/deploy/install.sh | bash
+# Usage: curl -sSL https://raw.githubusercontent.com/KiisMyGun/TT/main/deploy/install.sh | bash
 #
 
 set -e
@@ -16,7 +16,7 @@ CYAN='\033[0;36m'
 NC='\033[0m' # No Color
 
 # Configuration
-GITHUB_REPO="PIXEL-API/PixelAPI"
+GITHUB_REPO="KiisMyGun/TT"
 INSTALL_DIR="/opt/pixelapi"
 SERVICE_NAME="pixelapi"
 SERVICE_USER="pixelapi"
@@ -655,7 +655,7 @@ install_service() {
     cat > /etc/systemd/system/pixelapi.service << EOF
 [Unit]
 Description=PixelAPI - AI API Gateway Platform
-Documentation=https://github.com/PIXEL-API/PixelAPI
+Documentation=https://github.com/KiisMyGun/TT
 After=network.target postgresql.service redis.service
 Wants=postgresql.service redis.service
 

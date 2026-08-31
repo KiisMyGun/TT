@@ -36,7 +36,7 @@ export function baseOptions(): BaseLayoutProps {
     links: [
       {
         text: '控制台',
-        url: 'https://ai-pixel.online',
+        url: 'https://fuguofujia.icu',
         external: true,
       },
     ],

@@ -12,7 +12,7 @@
 
 中文 | [English](README_EN.md)
 
-线上站点：[ai-pixel.online](https://ai-pixel.online)
+线上站点：[fuguofujia.icu](https://fuguofujia.icu)
 
 </div>
 
@@ -95,7 +95,7 @@ PixelAPI 把 AI 订阅账号（Claude、Codex/OpenAI、Gemini、Antigravity、Gr
 
 ## 部署
 
-> **注意本项目与上游的产物区别**：本项目的镜像是 `ghcr.io/pixel-api/pixelapi`，二进制叫 `pixelapi`。
+> **注意本项目与上游的产物区别**：本项目的镜像是 `ghcr.io/kiismygun/tt`，二进制叫 `pixelapi`。
 > 网上流传的 `weishaw/sub2api` 镜像和 `Wei-Shaw/sub2api` 安装脚本属于**上游 Sub2API**，
 > 装了不会有本项目的账号广场、共享结算、Grok 接入等功能。
 
@@ -104,7 +104,7 @@ PixelAPI 把 AI 订阅账号（Claude、Codex/OpenAI、Gemini、Antigravity、Gr
 镜像发布在 GitHub Container Registry，支持 linux/amd64 与 linux/arm64：
 
 ```bash
-docker pull ghcr.io/pixel-api/pixelapi:latest
+docker pull ghcr.io/kiismygun/tt:latest
 ```
 
 可用 tag：`latest`、`1.2.29`（精确版本）、`1.2`（次版本跟随）、`1`（主版本跟随）。
@@ -115,8 +115,8 @@ docker pull ghcr.io/pixel-api/pixelapi:latest
 mkdir -p pixelapi-deploy && cd pixelapi-deploy
 
 # 取部署文件
-curl -sSLO https://raw.githubusercontent.com/PIXEL-API/PixelAPI/main/deploy/docker-compose.local.yml
-curl -sSLO https://raw.githubusercontent.com/PIXEL-API/PixelAPI/main/deploy/.env.example
+curl -sSLO https://raw.githubusercontent.com/KiisMyGun/TT/main/deploy/docker-compose.local.yml
+curl -sSLO https://raw.githubusercontent.com/KiisMyGun/TT/main/deploy/.env.example
 cp .env.example .env
 
 # 生成密钥填进 .env：POSTGRES_PASSWORD / JWT_SECRET / TOTP_ENCRYPTION_KEY
@@ -133,7 +133,7 @@ docker compose -f docker-compose.local.yml up -d
 从本仓库 Releases 下载对应架构的二进制并注册 systemd 服务：
 
 ```bash
-curl -sSL https://raw.githubusercontent.com/PIXEL-API/PixelAPI/main/deploy/install.sh | sudo bash
+curl -sSL https://raw.githubusercontent.com/KiisMyGun/TT/main/deploy/install.sh | sudo bash
 ```
 
 前置条件：Linux（amd64 或 arm64）、已装好并运行的 PostgreSQL 15+ 和 Redis 7+、root 权限。
@@ -149,7 +149,7 @@ sudo systemctl enable pixelapi
 
 ### 方式三：直接下载二进制
 
-[Releases](https://github.com/PIXEL-API/PixelAPI/releases) 提供 linux / macOS / Windows
+[Releases](https://github.com/KiisMyGun/TT/releases) 提供 linux / macOS / Windows
 共 5 个平台的压缩包和 `checksums.txt`，解压即用，无需运行时依赖（前端已内嵌）。
 
 ### 从源码构建
@@ -157,7 +157,7 @@ sudo systemctl enable pixelapi
 前置条件：Go 1.26+、Node.js 18+、pnpm、PostgreSQL 15+、Redis 7+。
 
 ```bash
-git clone https://github.com/PIXEL-API/PixelAPI.git
+git clone https://github.com/KiisMyGun/TT.git
 cd PixelAPI
 
 # 1. 构建前端，产物输出到 backend/internal/web/dist/

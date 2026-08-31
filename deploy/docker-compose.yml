@@ -16,7 +16,7 @@ services:
   # Sub2API Application
   # ===========================================================================
   sub2api:
-    image: ghcr.io/pixel-api/pixelapi:latest
+    image: ghcr.io/kiismygun/tt:latest
     container_name: sub2api
     restart: unless-stopped
     ulimits:

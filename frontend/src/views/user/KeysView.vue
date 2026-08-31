@@ -421,15 +421,6 @@
                 <Icon name="upload" size="sm" />
                 <span class="text-xs">{{ t('keys.importToCcSwitch') }}</span>
               </button>
-              <!-- Open Image Playground Button -->
-              <button
-                type="button"
-                @click="openImagePlayground(row)"
-                class="data-table-action text-content-muted hover:bg-brand-soft hover:text-brand"
-              >
-                <Icon name="sparkles" size="sm" />
-                <span class="text-xs">{{ t('keys.openImagePlayground') }}</span>
-              </button>
               <!-- Toggle Status Button -->
               <button
                 type="button"
@@ -1305,56 +1296,6 @@
       @close="closeUseKeyModal"
     />
 
-    <BaseDialog
-      :show="showImagePlaygroundModelDialog"
-      :title="t('keys.imagePlaygroundModelDialog.title')"
-      width="narrow"
-      @close="closeImagePlaygroundModelDialog"
-    >
-      <form
-        id="image-playground-model-form"
-        class="space-y-4"
-        @submit.prevent="confirmOpenImagePlayground"
-      >
-        <p class="text-sm leading-6 text-gray-600 dark:text-gray-400">
-          {{ t('keys.imagePlaygroundModelDialog.description') }}
-        </p>
-        <div>
-          <label for="image-playground-model" class="input-label">
-            {{ t('keys.imagePlaygroundModelDialog.modelLabel') }}
-          </label>
-          <input
-            id="image-playground-model"
-            v-model="imagePlaygroundModel"
-            type="text"
-            required
-            autocomplete="off"
-            class="input min-h-11 w-full"
-            :placeholder="t('keys.imagePlaygroundModelDialog.modelPlaceholder')"
-          />
-        </div>
-      </form>
-      <template #footer>
-        <div class="flex w-full flex-col-reverse gap-2 sm:flex-row sm:justify-end">
-          <button
-            type="button"
-            class="btn btn-secondary min-h-11 w-full sm:w-auto"
-            @click="closeImagePlaygroundModelDialog"
-          >
-            {{ t('common.cancel') }}
-          </button>
-          <button
-            type="submit"
-            form="image-playground-model-form"
-            class="btn btn-primary min-h-11 w-full sm:w-auto"
-            :disabled="!canOpenImagePlayground"
-          >
-            {{ t('keys.imagePlaygroundModelDialog.open') }}
-          </button>
-        </div>
-      </template>
-    </BaseDialog>
-
     <!-- CCS Client Selection Dialog for Antigravity -->
     <BaseDialog
       :show="showCcsClientSelect"
@@ -1539,7 +1480,6 @@ import type { AccountShareAPIKeyBindingStatus } from '@/api/accountShare'
 import { formatDateTime } from '@/utils/format'
 import { maskApiKey } from '@/utils/maskApiKey'
 import { buildCcSwitchImportDeeplink } from '@/utils/ccswitchImport'
-import { buildImagePlaygroundImportUrl } from '@/utils/imagePlaygroundImport'
 import { extractApiErrorCode, extractApiErrorMessage, isAbortError } from '@/utils/apiError'
 import {
   calculateExpirationPresetDate,
@@ -1812,11 +1752,6 @@ const showResetRateLimitDialog = ref(false)
 const showUseKeyModal = ref(false)
 const showCcsClientSelect = ref(false)
 const pendingCcsRow = ref<ApiKey | null>(null)
-const showImagePlaygroundModelDialog = ref(false)
-const pendingImagePlaygroundRow = ref<ApiKey | null>(null)
-const IMAGE_PLAYGROUND_DEFAULT_MODEL = 'gpt-image-2'
-const imagePlaygroundModel = ref('')
-const canOpenImagePlayground = computed(() => imagePlaygroundModel.value.trim().length > 0)
 const selectedKey = ref<ApiKey | null>(null)
 const copiedKeyId = ref<number | null>(null)
 const groupSelectorKeyId = ref<number | null>(null)
@@ -2877,42 +2812,6 @@ const executeCcsImport = (row: ApiKey, clientType: 'claude' | 'gemini') => {
     ccSwitchDetectionTimers.add(detectionTimer)
   } catch (error) {
     appStore.showError(t('keys.ccSwitchNotInstalled'))
-  }
-}
-
-const openImagePlayground = (row: ApiKey) => {
-  pendingImagePlaygroundRow.value = row
-  imagePlaygroundModel.value = IMAGE_PLAYGROUND_DEFAULT_MODEL
-  showImagePlaygroundModelDialog.value = true
-}
-
-const closeImagePlaygroundModelDialog = () => {
-  showImagePlaygroundModelDialog.value = false
-  pendingImagePlaygroundRow.value = null
-  imagePlaygroundModel.value = ''
-}
-
-const confirmOpenImagePlayground = () => {
-  const row = pendingImagePlaygroundRow.value
-  const model = imagePlaygroundModel.value.trim()
-  if (!row || !model) return
-
-  try {
-    const baseUrl = publicSettings.value?.api_base_url || window.location.origin
-    const siteName = (publicSettings.value?.site_name || 'Pixel API').trim() || 'Pixel API'
-    const url = buildImagePlaygroundImportUrl({
-      apiBaseUrl: baseUrl,
-      apiKey: row.key,
-      keyId: row.id,
-      keyName: row.name,
-      model,
-      sourceName: siteName
-    })
-
-    window.open(url, '_blank', 'noopener,noreferrer')
-    closeImagePlaygroundModelDialog()
-  } catch {
-    appStore.showError(t('keys.openImagePlaygroundFailed'))
   }
 }
 

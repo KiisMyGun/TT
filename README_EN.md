@@ -12,7 +12,7 @@
 
 [中文](README.md) | English
 
-Live site: [ai-pixel.online](https://ai-pixel.online)
+Live site: [fuguofujia.icu](https://fuguofujia.icu)
 
 </div>
 
@@ -100,7 +100,7 @@ by room or group, and the platform handles routing, metering, revenue split and 
 ## Deployment
 
 > **Do not confuse this project's artifacts with upstream's.** This project ships
-> `ghcr.io/pixel-api/pixelapi` and a binary named `pixelapi`. The widely circulated
+> `ghcr.io/kiismygun/tt` and a binary named `pixelapi`. The widely circulated
 > `weishaw/sub2api` image and `Wei-Shaw/sub2api` install script belong to **upstream Sub2API** and
 > contain none of this fork's account marketplace, shared-revenue settlement or Grok support.
 
@@ -109,7 +109,7 @@ by room or group, and the platform handles routing, metering, revenue split and 
 Images are published to the GitHub Container Registry for linux/amd64 and linux/arm64:
 
 ```bash
-docker pull ghcr.io/pixel-api/pixelapi:latest
+docker pull ghcr.io/kiismygun/tt:latest
 ```
 
 Available tags: `latest`, `1.2.29` (exact version), `1.2` (minor track), `1` (major track).
@@ -120,8 +120,8 @@ Deploy with Docker Compose (bundles PostgreSQL and Redis):
 mkdir -p pixelapi-deploy && cd pixelapi-deploy
 
 # Fetch the deployment files
-curl -sSLO https://raw.githubusercontent.com/PIXEL-API/PixelAPI/main/deploy/docker-compose.local.yml
-curl -sSLO https://raw.githubusercontent.com/PIXEL-API/PixelAPI/main/deploy/.env.example
+curl -sSLO https://raw.githubusercontent.com/KiisMyGun/TT/main/deploy/docker-compose.local.yml
+curl -sSLO https://raw.githubusercontent.com/KiisMyGun/TT/main/deploy/.env.example
 cp .env.example .env
 
 # Generate secrets for .env: POSTGRES_PASSWORD / JWT_SECRET / TOTP_ENCRYPTION_KEY
@@ -138,7 +138,7 @@ Open `http://YOUR_SERVER_IP:8080` for the setup wizard.
 Downloads the matching binary from this repository's Releases and registers a systemd service:
 
 ```bash
-curl -sSL https://raw.githubusercontent.com/PIXEL-API/PixelAPI/main/deploy/install.sh | sudo bash
+curl -sSL https://raw.githubusercontent.com/KiisMyGun/TT/main/deploy/install.sh | sudo bash
 ```
 
 Prerequisites: Linux (amd64 or arm64), PostgreSQL 15+ and Redis 7+ already installed and running,
@@ -155,7 +155,7 @@ Installs to `/opt/pixelapi`, config in `/etc/pixelapi`, service name `pixelapi`.
 
 ### Option 3: Download a Binary
 
-[Releases](https://github.com/PIXEL-API/PixelAPI/releases) carry archives for five platform targets
+[Releases](https://github.com/KiisMyGun/TT/releases) carry archives for five platform targets
 across Linux, macOS and Windows plus `checksums.txt`. Extract and run — the frontend is embedded, so
 there are no runtime dependencies.
 
@@ -164,7 +164,7 @@ there are no runtime dependencies.
 Prerequisites: Go 1.26+, Node.js 18+, pnpm, PostgreSQL 15+, Redis 7+.
 
 ```bash
-git clone https://github.com/PIXEL-API/PixelAPI.git
+git clone https://github.com/KiisMyGun/TT.git
 cd PixelAPI
 
 # 1. Build the frontend; output lands in backend/internal/web/dist/

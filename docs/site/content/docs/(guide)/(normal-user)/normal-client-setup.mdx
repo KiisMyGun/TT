@@ -64,7 +64,7 @@ mkdir -p ~/.codex
 
 ### config.toml 示例
 
-把 `base_url` 改成页面显示的地址。Codex 的 `base_url` 需要带 `/v1` 接口前缀，即 `https://ai-pixel.online/v1`。如果“使用密钥”弹窗给出不同地址，以弹窗为准。
+把 `base_url` 改成页面显示的地址。Codex 的 `base_url` 需要带 `/v1` 接口前缀，即 `https://fuguofujia.icu/v1`。如果“使用密钥”弹窗给出不同地址，以弹窗为准。
 
 ```toml
 model_provider = "OpenAI"
@@ -78,7 +78,7 @@ model_auto_compact_token_limit = 900000
 
 [model_providers.OpenAI]
 name = "OpenAI"
-base_url = "https://ai-pixel.online/v1"
+base_url = "https://fuguofujia.icu/v1"
 wire_api = "responses"
 requires_openai_auth = true
 ```
@@ -102,7 +102,7 @@ requires_openai_auth = true
 在终端里设置环境变量：
 
 ```bash
-export ANTHROPIC_BASE_URL="https://ai-pixel.online"
+export ANTHROPIC_BASE_URL="https://fuguofujia.icu"
 export ANTHROPIC_AUTH_TOKEN="sk-你的密钥"
 export CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1
 ```
@@ -110,7 +110,7 @@ export CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1
 Windows PowerShell 写法：
 
 ```powershell
-$env:ANTHROPIC_BASE_URL = "https://ai-pixel.online"
+$env:ANTHROPIC_BASE_URL = "https://fuguofujia.icu"
 $env:ANTHROPIC_AUTH_TOKEN = "sk-你的密钥"
 $env:CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC = "1"
 ```
@@ -156,7 +156,7 @@ Pixel API 也能代理 Claude AWS 渠道。用之前注意三件事：
 macOS/Linux：
 
 ```bash
-export GOOGLE_GEMINI_BASE_URL="https://ai-pixel.online"
+export GOOGLE_GEMINI_BASE_URL="https://fuguofujia.icu"
 export GEMINI_API_KEY="sk-你的密钥"
 export GEMINI_MODEL="gemini-2.0-flash"
 ```
@@ -164,7 +164,7 @@ export GEMINI_MODEL="gemini-2.0-flash"
 Windows PowerShell：
 
 ```powershell
-$env:GOOGLE_GEMINI_BASE_URL = "https://ai-pixel.online"
+$env:GOOGLE_GEMINI_BASE_URL = "https://fuguofujia.icu"
 $env:GEMINI_API_KEY = "sk-你的密钥"
 $env:GEMINI_MODEL = "gemini-2.0-flash"
 ```
@@ -195,7 +195,7 @@ opencode.jsonc
 
 ## 其他 OpenAI 兼容客户端
 
-只要客户端支持 OpenAI 兼容接口，就填这三样：Base URL 填 `https://ai-pixel.online`（个别要求带 `/v1`）、API Key 填 `sk-你的密钥`、Model 填当前分组支持的模型。要单独填认证头的话是 `Bearer sk-你的密钥`。
+只要客户端支持 OpenAI 兼容接口，就填这三样：Base URL 填 `https://fuguofujia.icu`（个别要求带 `/v1`）、API Key 填 `sk-你的密钥`、Model 填当前分组支持的模型。要单独填认证头的话是 `Bearer sk-你的密钥`。
 
 客户端问接口路径时一般选 `/chat/completions`；用 Responses API 的按「使用密钥」弹窗里的 Codex 配置走。
 
