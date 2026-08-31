@@ -99,6 +99,27 @@ describe('useAuthStore', () => {
       expect(localStorage.getItem('auth_user')).toBe(JSON.stringify(fakeUser))
     })
 
+    it('新登录请求发出前清除旧会话，避免旧请求注销新会话', async () => {
+      const store = useAuthStore()
+      mockLogin.mockResolvedValueOnce(fakeAuthResponse)
+      await store.login({ email: 'test@example.com', password: '123456' })
+
+      mockLogin.mockImplementationOnce(async () => {
+        expect(store.token).toBeNull()
+        expect(store.user).toBeNull()
+        expect(localStorage.getItem('auth_token')).toBeNull()
+        expect(localStorage.getItem('refresh_token')).toBeNull()
+        expect(localStorage.getItem('auth_user')).toBeNull()
+        expect(localStorage.getItem('token_expires_at')).toBeNull()
+        return fakeAuthResponse
+      })
+
+      await store.login({ email: 'test@example.com', password: '123456' })
+
+      expect(store.token).toBe('test-token-123')
+      expect(store.isAuthenticated).toBe(true)
+    })
+
     it('登录失败时清除状态并抛出错误', async () => {
       mockLogin.mockRejectedValue(new Error('Invalid credentials'))
       const store = useAuthStore()

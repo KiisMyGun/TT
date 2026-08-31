@@ -329,6 +329,12 @@ export const useAuthStore = defineStore('auth', () => {
    * @throws Error if login fails
    */
   async function login(credentials: LoginRequest): Promise<LoginResponse> {
+    // A credential login starts a brand-new session. Clear any persisted/in-memory
+    // session before sending the request so stale dashboard requests cannot race
+    // with the new login and remove the newly-issued token pair.
+    const preservePendingAuthSession = pendingAuthSession.value !== null
+    clearAuth({ preservePendingAuthSession })
+
     try {
       const response = await authAPI.login(credentials)
 
@@ -343,7 +349,7 @@ export const useAuthStore = defineStore('auth', () => {
       return response
     } catch (error) {
       // Clear any partial state on error
-      clearAuth({ preservePendingAuthSession: pendingAuthSession.value !== null })
+      clearAuth({ preservePendingAuthSession })
       throw error
     }
   }
