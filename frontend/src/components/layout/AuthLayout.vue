@@ -12,7 +12,7 @@
             <img :src="siteLogo || '/logo.png'" alt="Logo" class="h-full w-full object-contain" />
           </div>
           <h1 class="auth-title">
-            {{ siteName }}
+            <BrandWordmark :name="siteName" />
           </h1>
           <p class="auth-subtitle">
             {{ siteSubtitle }}
@@ -42,10 +42,11 @@
 import { computed, onMounted } from 'vue'
 import { useAppStore } from '@/stores'
 import { sanitizeUrl } from '@/utils/url'
+import BrandWordmark from '@/components/branding/BrandWordmark.vue'
 
 const appStore = useAppStore()
 
-const siteName = computed(() => appStore.siteName || 'Sub2API')
+const siteName = computed(() => appStore.siteName || 'superTT')
 const siteLogo = computed(() => sanitizeUrl(appStore.siteLogo || '', { allowRelative: true, allowDataUrl: true }))
 const siteSubtitle = computed(() => appStore.cachedPublicSettings?.site_subtitle || 'Subscription to API Conversion Platform')
 const settingsLoaded = computed(() => appStore.publicSettingsLoaded)

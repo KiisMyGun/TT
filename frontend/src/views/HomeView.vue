@@ -38,7 +38,7 @@
             />
           </svg>
         </span>
-        <span>{{ siteName }}</span>
+        <BrandWordmark :name="siteName" />
       </router-link>
 
       <nav class="home-nav-links" aria-label="Home navigation">
@@ -355,6 +355,7 @@ import { ref, computed, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useAuthStore, useAppStore } from '@/stores'
 import LocaleSwitcher from '@/components/common/LocaleSwitcher.vue'
+import BrandWordmark from '@/components/branding/BrandWordmark.vue'
 import Icon from '@/components/icons/Icon.vue'
 import { getPublicTodayStats } from '@/api/usage'
 
@@ -364,8 +365,8 @@ const authStore = useAuthStore()
 const appStore = useAppStore()
 
 // Site settings - directly from appStore (already initialized from injected config)
-const siteName = computed(() => appStore.cachedPublicSettings?.site_name || appStore.siteName || 'Sub2API')
-const siteLogo = computed(() => appStore.cachedPublicSettings?.site_logo || appStore.siteLogo || '')
+const siteName = computed(() => appStore.cachedPublicSettings?.site_name || appStore.siteName || 'superTT')
+const siteLogo = computed(() => appStore.cachedPublicSettings?.site_logo || appStore.siteLogo || '/logo.png')
 const docUrl = computed(() => appStore.cachedPublicSettings?.doc_url || appStore.docUrl || '')
 const homeContent = computed(() => appStore.cachedPublicSettings?.home_content || '')
 

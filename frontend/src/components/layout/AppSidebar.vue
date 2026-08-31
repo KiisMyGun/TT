@@ -31,7 +31,7 @@
         <span
           class="sidebar-brand-title text-lg font-bold text-gray-900 dark:text-white"
         >
-          {{ siteName }}
+          <BrandWordmark :name="siteName" />
         </span>
         <!-- Version Badge -->
         <VersionBadge :version="siteVersion" />
@@ -299,6 +299,7 @@ import {
   useOnboardingStore,
 } from "@/stores";
 import VersionBadge from "@/components/common/VersionBadge.vue";
+import BrandWordmark from "@/components/branding/BrandWordmark.vue";
 import { sanitizeSvg } from "@/utils/sanitize";
 import { FeatureFlags, makeSidebarFlag } from "@/utils/featureFlags";
 import { buildEmbeddedUrl, detectTheme } from "@/utils/embedded-url";
