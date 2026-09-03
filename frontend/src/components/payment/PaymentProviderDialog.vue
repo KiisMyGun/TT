@@ -266,6 +266,7 @@ import {
   WEBHOOK_PATHS,
   PAYMENT_MODE_QRCODE,
   PAYMENT_MODE_POPUP,
+  PAYMENT_MODE_REDIRECT,
   PAYMENT_MODE_JSAPI,
   getAvailableTypes,
   extractBaseUrl,
@@ -345,6 +346,7 @@ const paymentModeOptions = computed(() => {
     { value: PAYMENT_MODE_POPUP, label: t('admin.settings.payment.modePopup') },
   ]
   if (form.provider_key === 'alipay') {
+    modes.push({ value: PAYMENT_MODE_REDIRECT, label: t('admin.settings.payment.modeRedirect') })
     modes.push({ value: PAYMENT_MODE_JSAPI, label: t('admin.settings.payment.modeJSAPI') })
   }
   return modes

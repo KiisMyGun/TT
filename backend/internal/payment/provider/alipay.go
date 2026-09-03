@@ -115,10 +115,11 @@ func (a *Alipay) MerchantIdentityMetadata() map[string]string {
 
 // CreatePayment creates an Alipay payment using the following routing:
 //   - Mobile (H5): alipay.trade.wap.pay — browser redirect into Alipay.
-//   - Desktop: prefer alipay.trade.precreate to get a scan payload directly.
-//   - Desktop fallback: if precreate is unavailable for the merchant, fall back
-//     to alipay.trade.page.pay and expose both pay_url and qr_code so the
-//     frontend can render a QR while still allowing direct page open.
+//   - Desktop, default: prefer alipay.trade.precreate to get a scan payload.
+//   - Desktop, paymentMode == "redirect": go directly to
+//     alipay.trade.page.pay for merchants that only have website payment.
+//   - Desktop fallback: if precreate is unavailable, use page.pay and expose
+//     only pay_url. A page.pay URL is a checkout page, not a QR payload.
 func (a *Alipay) CreatePayment(ctx context.Context, req payment.CreatePaymentRequest) (*payment.CreatePaymentResponse, error) {
 	client, err := a.getClient()
 	if err != nil {
@@ -206,6 +207,10 @@ func (a *Alipay) createWapTrade(client *alipay.Client, req payment.CreatePayment
 }
 
 func (a *Alipay) createDesktopTrade(ctx context.Context, client *alipay.Client, req payment.CreatePaymentRequest, notifyURL, returnURL string) (*payment.CreatePaymentResponse, error) {
+	if strings.EqualFold(strings.TrimSpace(a.config["paymentMode"]), "redirect") {
+		return a.createPagePayTrade(client, req, notifyURL, returnURL)
+	}
+
 	resp, precreateErr := a.createPrecreateTrade(ctx, client, req, notifyURL)
 	if precreateErr == nil {
 		return resp, nil
@@ -263,7 +268,6 @@ func (a *Alipay) createPagePayTrade(client *alipay.Client, req payment.CreatePay
 	return &payment.CreatePaymentResponse{
 		TradeNo: req.OrderID,
 		PayURL:  payURL.String(),
-		QRCode:  payURL.String(),
 	}, nil
 }
 

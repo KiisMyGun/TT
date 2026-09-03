@@ -190,8 +190,47 @@ func TestCreateTradeUsesPagePayForDesktop(t *testing.T) {
 	if resp.PayURL == "" {
 		t.Fatal("expected pay_url for desktop page pay")
 	}
-	if resp.QRCode != resp.PayURL {
-		t.Fatalf("qr_code = %q, want same as pay_url %q", resp.QRCode, resp.PayURL)
+	if resp.QRCode != "" {
+		t.Fatalf("qr_code = %q, want empty for page pay", resp.QRCode)
+	}
+}
+
+func TestCreateTradeRedirectModeSkipsPrecreate(t *testing.T) {
+	origPreCreate := alipayTradePreCreate
+	origPagePay := alipayTradePagePay
+	t.Cleanup(func() {
+		alipayTradePreCreate = origPreCreate
+		alipayTradePagePay = origPagePay
+	})
+
+	preCreateCalls := 0
+	pagePayCalls := 0
+	alipayTradePreCreate = func(context.Context, *alipay.Client, alipay.TradePreCreate) (*alipay.TradePreCreateRsp, error) {
+		preCreateCalls++
+		return nil, errors.New("unexpected precreate call")
+	}
+	alipayTradePagePay = func(*alipay.Client, alipay.TradePagePay) (*url.URL, error) {
+		pagePayCalls++
+		return url.Parse("https://openapi.alipay.com/gateway.do?page-pay")
+	}
+
+	provider := &Alipay{config: map[string]string{"paymentMode": "redirect"}}
+	resp, err := provider.createDesktopTrade(context.Background(), &alipay.Client{}, payment.CreatePaymentRequest{
+		OrderID: "sub2_redirect",
+		Amount:  "1.00",
+		Subject: "Balance recharge",
+	}, "https://merchant.example.com/api/v1/payment/webhook/alipay", "https://merchant.example.com/payment/result")
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+	if preCreateCalls != 0 {
+		t.Fatalf("precreate calls = %d, want 0", preCreateCalls)
+	}
+	if pagePayCalls != 1 {
+		t.Fatalf("page pay calls = %d, want 1", pagePayCalls)
+	}
+	if resp.PayURL == "" || resp.QRCode != "" {
+		t.Fatalf("unexpected response: pay_url=%q qr_code=%q", resp.PayURL, resp.QRCode)
 	}
 }
 
